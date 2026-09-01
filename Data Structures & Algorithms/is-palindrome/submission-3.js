@@ -1,0 +1,60 @@
+// This method adds space complexity O(n) due to creating a new string for comparison.
+// - it's no better than the reverse string method due to this.
+// - INSTEAD: use the two pointers method on the existing input string directly.
+//   By having a more complex compare function per char to include an alphanumeric check.
+class Solution {
+
+    /**
+     * Check if a character is alphanumeric
+     * @param {char} char
+     * @return {boolean}
+     */
+    isAlphanumeric(char) {
+        return (
+            (char >= 'a' && char <= 'z') ||
+            (char >= 'A' && char <= 'Z') ||
+            (char >= '0' && char <= '9')
+        );
+    }  
+
+    /**
+     * @param {string} s
+     * @return {boolean}
+     */
+    isPalindrome(s) {
+
+        // Two pointers, left & right
+        let [leftIndex, rightIndex] = [0, s.length - 1];
+        console.log(leftIndex, rightIndex);
+
+        // Compare the pointers
+        // - if chars equal, increment left & decrement right. 
+        while(leftIndex < rightIndex){
+
+            while(!this.isAlphanumeric(s[leftIndex])){
+                if(!(leftIndex < rightIndex)){
+                    break;
+                } else {
+                    leftIndex++;
+                }
+            }
+
+            while(!this.isAlphanumeric(s[rightIndex])){
+                if(!(rightIndex > leftIndex)){
+                    break;
+                } else {                
+                    rightIndex--;
+                }
+            }
+
+            if(s[leftIndex].toLowerCase() === s[rightIndex].toLowerCase()){
+                leftIndex++;
+                rightIndex--;
+            } else {
+                return false;
+            }
+        }
+
+        return true;
+    }  
+}
